@@ -1,0 +1,15 @@
+[Unit]
+Description=Run %p.service
+
+Requires=docker.service
+
+[Timer]
+OnActiveSec=15min
+OnCalendar=*/12:00
+Persistent=true
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true

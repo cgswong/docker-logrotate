@@ -1,0 +1,18 @@
+[Unit]
+Description=Docker log rotation
+
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=Simple
+ExecStartPre=-docker rm -f %p
+ExecStartPre=docker pull monsantoco/docker-logrotate:cron
+
+ExecStart=docker run --log-driver=syslog --rm --volume /var/lib/docker/containers:/var/lib/docker/containers:rw monsantoco/docker-logrotate:cron
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+MachineOf=%p.timer

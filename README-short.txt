@@ -1,0 +1,1 @@
+Docker log rotation (~6 MB)

@@ -1,0 +1,25 @@
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# * * * * *  command to execute
+# │ │ │ │ │
+# │ │ │ │ └─── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
+# │ │ │ └───── month (1 - 12)
+# │ │ └─────── day of month (1 - 31)
+# │ └───────── hour (0 - 23)
+# └─────────── min (0 - 59)
+
+# do daily/weekly/monthly maintenance
+# min hour  day month weekday command
+*/15  * * * * run-parts /etc/periodic/15min
+0 * * * * run-parts /etc/periodic/hourly
+0 2 * * * run-parts /etc/periodic/daily
+0 3 * * 6 run-parts /etc/periodic/weekly
+0 5 1 * * run-parts /etc/periodic/monthly
+0 * * * *  /usr/sbin/logrotate /etc/logrotate.d/docker-logrotate.conf &>/dev/null
